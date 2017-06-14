@@ -1,0 +1,34 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Tikapekeskustelu</title>
+        <meta charset="utf-8" /> 
+        <style>
+            th{
+                text-align: left;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>Keskusteluaiheen viestit</h1>
+        
+        <ul>
+            <li th:each="alkio : ${viestit}">
+                <span th:text="${alkio.sisalto}">d</span> t. <span th:text="${alkio.lahettaja}">a</span>
+            </li>
+        </ul>
+        
+        <form method="POST">
+            <p>Kirjoita viestisi tähän:</p>
+            <textarea rows="4" cols="50" name = "sisalto"></textarea>
+            <p>Kirjoitathan vielä nimesi kiitos!</p>
+            <input type="text" name="lahettaja"/>
+            
+            <input type="submit" value="Lähetä!"/>
+        </form>
+        <a th:href="@{~/{a.nimi} (a.nimi = ${alue.nimi})}" th:text="Takaisin">a</a>
+
+    </body>
+</html>

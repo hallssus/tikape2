@@ -1,0 +1,28 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-4.dtd">
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Kiva keskustelupaikka</title>
+        <meta charset="UTF-8">
+    </head>
+    <body>
+        
+        <h1>Aloita keskustelu!</h1>
+        
+        <ul>
+            <li th:each="opiskelija: ${opiskelijat}">
+                <span th:text="${opiskelija.nimi}">opiskelijan nimi</span> <a th:href="${'/opiskelijat/' + opiskelija.id}">linkki</a>
+            </li>
+        </ul>
+        
+        <form method="POST" action="/alue">
+            Alue:<br/>
+            <input type="text" name="alue"/><br/>
+            <input type="submit" value="Lisää aihe"/>
+        </form>
+    </body>
+</html>
