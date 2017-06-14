@@ -45,7 +45,7 @@ public class ViestiDao implements Dao<Viesti, Integer>{
         this.database.update("INSERT INTO Viesti (lahettaja, sisalto, aihe, alue) VALUES (?, ?, ?, ?)", lahettaja, sisalto, aihe, alue);
         
         this.database.update("UPDATE Alue SET viimeisin_viesti = datetime('now','localtime') WHERE nimi = ?", alue);
-        this.database.update("UPDATE Aihe SET viimeisin_viesti = datetime('now','localtime') WHERE nimi = ?", aihe);
+        this.database.update("UPDATE Aihe SET viimeisin_viesti = datetime('now','localtime') WHERE id = ?", Integer.parseInt(aihe));
     }
 
     @Override

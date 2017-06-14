@@ -14,11 +14,11 @@
     <body>
         <h1>Keskusteluaiheen viestit</h1>
         
-        <ul>
+        <ol>
             <li th:each="alkio : ${viestit}">
                 <span th:text="${alkio.sisalto}">d</span> t. <span th:text="${alkio.lahettaja}">a</span>
             </li>
-        </ul>
+        </ol>
         
         <form method="POST">
             <p>Kirjoita viestisi tähän:</p>
