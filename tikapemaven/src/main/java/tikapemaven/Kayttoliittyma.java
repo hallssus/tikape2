@@ -7,6 +7,7 @@ package tikapemaven;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Scanner;
 import tikape.database.AiheDao;
 import tikape.database.AlueDao;
 import tikape.database.Database;
@@ -32,8 +33,49 @@ public class Kayttoliittyma {
         this.alueDao= new AlueDao(db);
     }
     
-    public void kaynnista() {
+    public void kaynnista() throws SQLException {
         //metodi joka käyttää muita luokan metodeja käyttäjän antamien käskyjen mukaan
+        Scanner lukija = new Scanner(System.in);
+        System.out.println("Hei");
+        while (true) {
+    
+            System.out.println("Näytä alueet: 1");
+            System.out.println("Näytä aiheet: 2");
+            System.out.println("Näytä viestit: 3");
+            System.out.println("Näytä alueen aiheet: 4");
+            System.out.println("Näytä aiheen viestit: 5");
+            System.out.println("Näitä alueen viestien lukumäärä: 6");
+            System.out.println("Lopeta: 13");
+            System.out.println("Mitä haluat tehdä?: ");
+            int kasky = Integer.parseInt(lukija.nextLine());
+            switch (kasky) {
+                case 1:
+                    this.tulostaAlueet();
+                case 2:
+                    this.tulostaAiheet();
+                case 3:
+                    this.tulostaViestit();
+                    
+                case 4:
+                    System.out.println("Anna alueen nimi: ");
+                    String alue=lukija.nextLine();
+                    this.tulostaAlueenAiheet(alue);
+                    
+                case 5:
+                    System.out.println("Anna aiheen nimi: ");
+                    String aihe = lukija.nextLine();
+                    this.tulostaAiheenViestit(aihe);
+                    
+                case 6: 
+                    System.out.println("Anna alue: ");
+                    String alue2=lukija.nextLine();
+                    this.viestejaAlueella(alue2);
+                    
+                case 13:
+                    break;
+                
+            }
+        }
     }
     //tulostaa kaikki viestit
     
