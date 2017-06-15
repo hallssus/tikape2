@@ -58,6 +58,15 @@ public class AiheDao implements Dao<Aihe, Integer>{
     public void delete(Integer key) throws SQLException {
         this.database.update("DELETE FROM Aihe WHERE id = ?", key);
     }
+    
+    public Integer palautaIdNimenMukaan(String nimi) throws SQLException {
+            List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe WHERE nimi = ?", new AiheCollector(), nimi);
+        if (aiheet.isEmpty()) {
+            return null;
+        }
+
+        return aiheet.get(0).getId();
+    }
 
     
 }

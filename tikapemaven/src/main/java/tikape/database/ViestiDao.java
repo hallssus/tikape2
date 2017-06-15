@@ -58,4 +58,14 @@ public class ViestiDao implements Dao<Viesti, Integer>{
         this.database.update("DELETE FROM Viesti WHERE id = ?", key);
     }
     
+     public List<Viesti> kaikkiAiheenViestit(String aihe) throws SQLException {
+        AiheDao aiheDao=new AiheDao(this.database);
+        Integer aihe0=aiheDao.palautaIdNimenMukaan(aihe);
+        List<Viesti> viestit= this.database.queryAndCollect("SELECT * FROM Viesti WHERE aihe = ?", new ViestiCollector(), aihe0);
+        if (viestit.isEmpty()) {
+            return null;
+        }
+        return viestit;
+    }
+    
 }
