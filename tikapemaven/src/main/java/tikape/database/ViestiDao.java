@@ -43,13 +43,11 @@ public class ViestiDao implements Dao<Viesti, Integer>{
     
     public void lisaaViesti(String lahettaja, String sisalto, String alue, String aihe) throws SQLException {
         this.database.update("INSERT INTO Viesti (lahettaja, sisalto, aihe, alue) VALUES (?, ?, ?, ?)", lahettaja, sisalto, aihe, alue);
-<<<<<<< HEAD
+
         
         this.database.update("UPDATE Alue SET viestienlukumaara = viestienlukumaara + 1 WHERE nimi = ?", alue);
         this.database.update("UPDATE Aihe SET viestienlukumaara = viestienlukumaara + 1 WHERE id = ?", Integer.parseInt(aihe));
-=======
 
->>>>>>> abe96c801e6a0a7f1b26066de8e27d664b4b7a2f
         this.database.update("UPDATE Alue SET viimeisin_viesti = datetime('now','localtime') WHERE nimi = ?", alue);
         this.database.update("UPDATE Aihe SET viimeisin_viesti = datetime('now','localtime') WHERE id = ?", Integer.parseInt(aihe));
     }
