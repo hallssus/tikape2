@@ -29,14 +29,14 @@ public class AiheDao implements Dao<Aihe, Integer>{
     }
     
     public List<Aihe> etsiKaikkiAlueenNimella(String alue) throws SQLException {
-        System.out.println("heihei mitä kuuluu");
-        List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe WHERE alue = ?", new AiheCollector(), alue);
-        System.out.println("miksi oi miksi");
+        
+        List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe WHERE alue = ? ORDER BY viimeisin_viesti DESC", new AiheCollector(), alue);
+        
         if (aiheet.isEmpty()){
-            System.out.println("enkö selvinnyt");
+            
             return null;
         }
-        System.out.println("selvisinkö");
+        
         return aiheet;
     }
 
