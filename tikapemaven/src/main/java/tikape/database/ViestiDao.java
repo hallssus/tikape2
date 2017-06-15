@@ -43,7 +43,7 @@ public class ViestiDao implements Dao<Viesti, Integer>{
     
     public void lisaaViesti(String lahettaja, String sisalto, String alue, String aihe) throws SQLException {
         this.database.update("INSERT INTO Viesti (lahettaja, sisalto, aihe, alue) VALUES (?, ?, ?, ?)", lahettaja, sisalto, aihe, alue);
-        
+
         this.database.update("UPDATE Alue SET viimeisin_viesti = datetime('now','localtime') WHERE nimi = ?", alue);
         this.database.update("UPDATE Aihe SET viimeisin_viesti = datetime('now','localtime') WHERE id = ?", Integer.parseInt(aihe));
     }
@@ -51,6 +51,10 @@ public class ViestiDao implements Dao<Viesti, Integer>{
     @Override
     public List<Viesti> findAll() throws SQLException {
         return this.database.queryAndCollect("SELECT * FROM Viesti", new ViestiCollector());
+    }
+    
+    public List<Viesti> findTen(Integer offset) throws SQLException {
+        return this.database.queryAndCollect("SELECT * FROM Viesti LIMIT 10 OFFSET ? ", new ViestiCollector(),offset);
     }
 
     @Override
