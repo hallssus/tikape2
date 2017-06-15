@@ -4,7 +4,9 @@ package tikape.database;
 import java.sql.SQLException;
 import java.util.List;
 import tikape.collectors.AlueCollector;
+import tikape.collectors.ViestiCollector;
 import tikape.pojo.Alue;
+import tikape.pojo.Viesti;
 
 public class AlueDao implements Dao<Alue, Integer>{
     
@@ -26,10 +28,15 @@ public class AlueDao implements Dao<Alue, Integer>{
 
         return alueet.get(0);
     }
-
+    
+    public Integer viestienlkm(String nimi) throws SQLException {
+        List<Viesti> viestit = this.database.queryAndCollect("SELECT * FROM Viesti WHERE alue = ?", new ViestiCollector(), nimi);
+        return viestit.size();
+    }
+    
     @Override
     public void save(Alue alue) throws SQLException {
-        this.database.update("INSERT INTO Alue (nimi, luomispaiva) VALUES (?, datetime('now','localtime'))", alue.getNimi());
+        this.database.update("INSERT INTO Alue (nimi, luomispaiva, viestienlukumaara) VALUES (?, datetime('now','localtime'), 0)", alue.getNimi());
     }
 
     @Override

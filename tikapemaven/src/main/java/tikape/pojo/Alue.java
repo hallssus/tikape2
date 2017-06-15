@@ -8,18 +8,21 @@ public class Alue {
     private String nimi;
     private String luomispaiva;  //täysin varma en ole onko tämä oikein toimiva
     private String viimeisinViesti;
+    private int viestienlukumaara;
     
     public Alue(String nimi, String paiva) {
         //päivämäärien initalisointi ? tässä vai antaako kutsuessa päivämäärän kuten nyt
         this.luomispaiva=paiva;
         this.nimi= nimi;
         this.viimeisinViesti=null;
+        this.viestienlukumaara = 0;
     }
-
-    public Alue(String nimi, String luomispaiva, String viimeisinViesti) {
+    
+    public Alue(String nimi, String luomispaiva, String viimeisinViesti, int viestienlukumaara) {
         this.nimi = nimi;
         this.luomispaiva = luomispaiva;
         this.viimeisinViesti = viimeisinViesti;
+        this.viestienlukumaara = viestienlukumaara;
     }
     
     
@@ -27,6 +30,14 @@ public class Alue {
     
     public void setViimeisinViesti(String paivamaara) {
         this.viimeisinViesti=paivamaara;
+    }
+
+    public void setViestienLukumaara(int viestienLukumaara) {
+        this.viestienlukumaara = viestienLukumaara;
+    }
+
+    public int getViestienLukumaara() {
+        return viestienlukumaara;
     }
     
     public String getNimi(){

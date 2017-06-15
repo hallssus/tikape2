@@ -40,6 +40,7 @@
         <table style="width:50%">
             <tr>
                 <th>Alue</th>
+                <th>Viestejä yhteensä</th>
                 <th>Viimeisin viesti</th>
             </tr>
             <th:block th:each="alkio : ${alueet}">
@@ -47,6 +48,7 @@
                     <td>
                         <a th:href="@{~/{a_id}(a_id=${alkio.nimi})}" th:text="${alkio.nimi}">nimi</a>
                     </td>
+                    <td th:text="${alkio.viestienLukumaara}">lkm</td>
                     <td th:text="${alkio.viimeisinViesti}">viimeisinviesti</td>
                 </tr>
             </th:block>

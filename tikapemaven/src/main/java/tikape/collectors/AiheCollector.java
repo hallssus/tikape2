@@ -11,7 +11,7 @@ public class AiheCollector implements Collector<Aihe>{
 
     @Override
     public Aihe collect(ResultSet rs) throws SQLException {
-        return new Aihe(rs.getInt("id"), rs.getString("nimi"), rs.getString("luomispaiva"), rs.getString("viimeisin_viesti"), rs.getString("alue"));
+        return new Aihe(rs.getInt("id"), rs.getString("nimi"), rs.getString("luomispaiva"), rs.getString("viimeisin_viesti"), rs.getString("alue"), rs.getInt("viestienlukumaara"));
     }
     
 }

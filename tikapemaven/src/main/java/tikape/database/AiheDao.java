@@ -42,11 +42,11 @@ public class AiheDao implements Dao<Aihe, Integer>{
 
     @Override
     public void save(Aihe aihe) throws SQLException {
-        this.database.update("INSERT INTO Aihe (nimi, luomispaiva, alue) VALUES (?, ?, ?)", aihe.getNimi(), aihe.getLuomispaiva(), aihe.getAlue());
+        this.database.update("INSERT INTO Aihe (nimi, luomispaiva, alue, viestienlukumaara) VALUES (?, ?, ?, 0)", aihe.getNimi(), aihe.getLuomispaiva(), aihe.getAlue());
     }
     
     public void lisaaAihe(String nimi, String alue) throws SQLException {
-        this.database.update("INSERT INTO Aihe (nimi, luomispaiva, alue) VALUES (?, datetime('now','localtime'), ?)", nimi,  alue);
+        this.database.update("INSERT INTO Aihe (nimi, luomispaiva, alue, viestienlukumaara) VALUES (?, datetime('now','localtime'), ?, 0)", nimi,  alue);
     }
 
     @Override

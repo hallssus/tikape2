@@ -44,6 +44,8 @@ public class ViestiDao implements Dao<Viesti, Integer>{
     public void lisaaViesti(String lahettaja, String sisalto, String alue, String aihe) throws SQLException {
         this.database.update("INSERT INTO Viesti (lahettaja, sisalto, aihe, alue) VALUES (?, ?, ?, ?)", lahettaja, sisalto, aihe, alue);
         
+        this.database.update("UPDATE Alue SET viestienlukumaara = viestienlukumaara + 1 WHERE nimi = ?", alue);
+        this.database.update("UPDATE Aihe SET viestienlukumaara = viestienlukumaara + 1 WHERE id = ?", Integer.parseInt(aihe));
         this.database.update("UPDATE Alue SET viimeisin_viesti = datetime('now','localtime') WHERE nimi = ?", alue);
         this.database.update("UPDATE Aihe SET viimeisin_viesti = datetime('now','localtime') WHERE id = ?", Integer.parseInt(aihe));
     }

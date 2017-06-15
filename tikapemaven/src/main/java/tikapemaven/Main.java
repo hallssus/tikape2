@@ -44,24 +44,6 @@ public class Main {
             System.out.println(alue.getLuomispaiva());
             System.out.println(alue.getViimeisinViesti());
         }
-
-//        post("/s/tsats", (req, res) -> {
-//            HashMap map = new HashMap<>();
-//            Alue mikaAlue = (Alue) req.session().attribute("alue");
-//            String text = "";
-//            
-//            if (req.queryParams().contains("message")) {
-//                text = req.queryParams("message");
-//            }
-//            ViestiDao.save(new Viesti(text, ));
-//            // TODO: add a new chat message
-//            // see from "tsats.html" to figure out what the parameters
-//            // are called
-//            
-//            res.redirect("/s/users/" + loggedUser.getId());
-//            return "";
-//        });
-//        
         
         List<String> list = new ArrayList<>();
         
@@ -109,6 +91,7 @@ public class Main {
         
         post("/:a_nimi/:ai_id", (req,res) -> {
             viestiDao.lisaaViesti(req.queryParams("lahettaja"), req.queryParams("sisalto"), req.params(":a_nimi"), req.params(":ai_id"));   
+            
             res.redirect(req.params(":ai_id"));
             return "moi";        
         });
