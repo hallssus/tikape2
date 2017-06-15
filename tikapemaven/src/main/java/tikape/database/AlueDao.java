@@ -2,6 +2,7 @@
 package tikape.database;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import tikape.collectors.AlueCollector;
 import tikape.collectors.ViestiCollector;
@@ -42,6 +43,48 @@ public class AlueDao implements Dao<Alue, Integer>{
     @Override
     public List<Alue> findAll() throws SQLException {
         return this.database.queryAndCollect("SELECT * FROM Alue", new AlueCollector());
+    }
+    public List<Alue> lyhennaNimetAlueista() throws SQLException {
+        List<Alue> alueet = findAll();
+        for(Alue alue : alueet){
+            String uusiNimi = lyhenna(alue.getNimi());
+            alue.setLyhytnimi(uusiNimi);
+            System.out.println(alue.getNimi() + " " + alue.getLyhytnimi());
+        }
+        return alueet;
+    }
+    
+    public boolean onkoHyvaNimi(String nimi) throws SQLException {
+        String uusinimi = nimi.trim();
+        if (uusinimi.isEmpty()){
+            return false;
+        }
+        for (Alue alue: findAll()){
+            if (alue.getNimi().equals(nimi)){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private String lyhenna(String sana){
+        StringBuilder uusiSana = new StringBuilder();
+        if(sana.length() == 0){
+            return "";
+        }
+        boolean pitka = true;
+        for(int i = 0; i < 20; i++){
+            uusiSana.append(sana.charAt(i));
+            if(i == sana.length() - 1){
+                pitka = false;
+                break;
+            }
+            
+        }
+        if(pitka){
+            uusiSana.append("...");
+        }
+        return uusiSana.toString();
     }
 
     public void poista(String nimi) throws SQLException {

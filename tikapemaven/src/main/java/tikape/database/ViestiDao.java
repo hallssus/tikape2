@@ -4,6 +4,7 @@ package tikape.database;
 import tikape.database.Dao;
 import tikape.database.Database;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import tikape.collectors.ViestiCollector;
 import tikape.pojo.Viesti;
@@ -56,8 +57,27 @@ public class ViestiDao implements Dao<Viesti, Integer>{
         return this.database.queryAndCollect("SELECT * FROM Viesti", new ViestiCollector());
     }
     
-    public List<Viesti> findTen(Integer offset) throws SQLException {
-        return this.database.queryAndCollect("SELECT * FROM Viesti LIMIT 10 OFFSET ? ", new ViestiCollector(),offset);
+    public List<Viesti> findTen(Integer aihe, Integer sivunro,  Integer viestitPerSivu) throws SQLException {
+        return this.database.queryAndCollect("SELECT * FROM Viesti WHERE aihe = ? LIMIT ? OFFSET (? - 1) * ?", new ViestiCollector(), aihe, viestitPerSivu, sivunro, viestitPerSivu);
+    }
+    
+    public List<Integer> tarvittavatSivut (Integer aihe, Integer viestitPerSivu) throws SQLException {
+        List<Viesti> viestit = this.database.queryAndCollect("SELECT * FROM Viesti WHERE aihe = ?", new ViestiCollector(), aihe);
+        int lkm = viestit.size();
+        List<Integer> sivutlistana = new ArrayList<>();
+        if (lkm == 0){
+            sivutlistana.add(1);
+            return sivutlistana;
+        }
+        sivutlistana.clear();
+        int sivumaara = 0;
+        while (lkm > 0){
+            lkm = lkm - viestitPerSivu;
+            sivumaara++;
+            sivutlistana.add(sivumaara);
+        }
+        return sivutlistana;
+        
     }
 
     @Override

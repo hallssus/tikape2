@@ -114,7 +114,7 @@ public class Kayttoliittyma {
     //tulostaa kaikki annetun alueen aiheet
     
     public void tulostaAlueenAiheet(String alue) throws SQLException {
-        List<Aihe> aiheet = this.aiheDao.etsiKaikkiAlueenNimella(alue);
+        List<Aihe> aiheet = this.aiheDao.etsiKymmenenAlueenNimella(alue);
         System.out.println(aiheet);
     }
     
@@ -147,7 +147,7 @@ public class Kayttoliittyma {
     //palauttaa alueella olevien viestien määrän 
     public Integer viestejaAlueella(String nimi) throws SQLException {
         int j=0;
-        List<Aihe> aiheet = this.aiheDao.etsiKaikkiAlueenNimella(nimi);
+        List<Aihe> aiheet = this.aiheDao.etsiKymmenenAlueenNimella(nimi);
         for (int i=0; i<aiheet.size(); i++) {
             j=j+this.viestejaAiheessa(aiheet.get(i).getId());
         }

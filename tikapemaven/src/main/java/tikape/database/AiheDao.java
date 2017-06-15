@@ -2,6 +2,7 @@
 package tikape.database;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import tikape.collectors.AiheCollector;
 import tikape.collectors.AlueCollector;
@@ -28,9 +29,9 @@ public class AiheDao implements Dao<Aihe, Integer>{
         return aiheet.get(0);
     }
     
-    public List<Aihe> etsiKaikkiAlueenNimella(String alue) throws SQLException {
+    public List<Aihe> etsiKymmenenAlueenNimella(String alue) throws SQLException {
         
-        List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe WHERE alue = ? ORDER BY viimeisin_viesti DESC", new AiheCollector(), alue);
+        List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe WHERE alue = ? ORDER BY viimeisin_viesti DESC LIMIT 10", new AiheCollector(), alue);
         
         if (aiheet.isEmpty()){
             
@@ -38,6 +39,14 @@ public class AiheDao implements Dao<Aihe, Integer>{
         }
         
         return aiheet;
+    }
+    
+    public Aihe haeUusinAihe() throws SQLException {
+        List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe ORDER BY id DESC",new AiheCollector());
+        if (aiheet.isEmpty()){
+            return null;
+        }
+        return aiheet.get(0);
     }
 
     @Override
@@ -59,6 +68,7 @@ public class AiheDao implements Dao<Aihe, Integer>{
         this.database.update("DELETE FROM Aihe WHERE id = ?", key);
     }
     
+    
     public Integer palautaIdNimenMukaan(String nimi) throws SQLException {
             List<Aihe> aiheet = this.database.queryAndCollect("SELECT * FROM Aihe WHERE nimi = ?", new AiheCollector(), nimi);
         if (aiheet.isEmpty()) {
@@ -67,6 +77,40 @@ public class AiheDao implements Dao<Aihe, Integer>{
 
         return aiheet.get(0).getId();
     }
+    
+    public List<Aihe> lyhennaNimetAiheista(String alue) throws SQLException {
+        if(etsiKymmenenAlueenNimella(alue) == null){
+            return null;
+        }
+        List<Aihe> aiheet = etsiKymmenenAlueenNimella(alue);
+        List<Aihe> lyhennetyt = new ArrayList<>();
+
+        for(Aihe aihe : aiheet){
+            String uusiNimi = lyhenna(aihe.getNimi());
+            lyhennetyt.add(new Aihe(aihe.getId(), uusiNimi, aihe.getLuomispaiva(), aihe.getViimeisinViesti(), aihe.getAlue(), aihe.getViestienlukumaara()));
+        }
+        return lyhennetyt;
+    }
+    private String lyhenna(String sana){
+        StringBuilder uusiSana = new StringBuilder();
+        boolean pitka = true;
+        if(sana.length() == 0){
+            return "";
+        }
+        for(int i = 0; i < 20; i++){
+            uusiSana.append(sana.charAt(i));
+            if(i == sana.length() - 1){
+                pitka = false;
+                break;
+            }
+            
+        }
+        if(pitka){
+            uusiSana.append("...");
+        }
+        return uusiSana.toString();
+    }
+
 
     
 }

@@ -8,12 +8,31 @@
             th{
                 text-align: justify;
             }
+            h1{
+                overflow: hidden;
+                padding: 10px;
+                animation-name: example;
+                animation-duration: 6s;
+                animation-iteration-count: infinite;
+                position: relative;
+            }
             div{
                 width:10px;
                 height:10px;
                 background: hotpink;
                 transition: width 3s;
-                transition-timing-function: ease-out;                
+                transition-timing-function: ease-out;
+
+
+            }
+            @keyframes example {
+                0%     {color: red; left: 0px; top: 0px;}
+                16%   {color: orange; left: 20px; top: 10px;}
+                33%  {color: yellow; left: 40px; top: 10px;}
+                50%  {color: green; left: 60px; top; 0px;}
+                66% {color: blue; left: 40px; top: -10px;}
+                83% {color: purple; left: 20px; top: -10px;}
+                100% {color: red; left: 0px; top: 0px;}
             }
             div:hover{
                 width: 1000px;
@@ -34,9 +53,9 @@
     <body>
 
         <h1>Aloita keskustelu!</h1>
-        
+
         <div></div>
-        
+
         <table style="width:50%">
             <tr>
                 <th>Alue</th>
@@ -46,20 +65,20 @@
             <th:block th:each="alkio : ${alueet}">
                 <tr>
                     <td>
-                        <a th:href="@{~/{a_id}(a_id=${alkio.nimi})}" th:text="${alkio.nimi}">nimi</a>
+                        <a th:href="@{~/{a_id}(a_id=${alkio.nimi})}" th:text="${alkio.lyhytnimi}">nimi</a>
                     </td>
                     <td th:text="${alkio.viestienLukumaara}">lkm</td>
                     <td th:text="${alkio.viimeisinViesti}">viimeisinviesti</td>
                 </tr>
             </th:block>
         </table>
-        
+
         <form method="POST" action="/">
             <br/>
             <input type="text" name="nimi"/><br/>
             <input type="submit" value="Lisää alue"/>
-            
+
         </form>
-        
+
     </body>
 </html>

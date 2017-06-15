@@ -9,6 +9,7 @@ public class Alue {
     private String luomispaiva;  //täysin varma en ole onko tämä oikein toimiva
     private String viimeisinViesti;
     private int viestienlukumaara;
+    private String lyhytnimi;
     
     public Alue(String nimi, String paiva) {
         //päivämäärien initalisointi ? tässä vai antaako kutsuessa päivämäärän kuten nyt
@@ -23,6 +24,7 @@ public class Alue {
         this.luomispaiva = luomispaiva;
         this.viimeisinViesti = viimeisinViesti;
         this.viestienlukumaara = viestienlukumaara;
+        this.lyhytnimi = null;
     }
     
     
@@ -56,6 +58,15 @@ public class Alue {
     public String toString() {
         return nimi + this.luomispaiva + this.viimeisinViesti;
     }
+
+    public void setLyhytnimi(String lyhytnimi) {
+        this.lyhytnimi = lyhytnimi;
+    }
+
+    public String getLyhytnimi() {
+        return lyhytnimi;
+    }
+    
     
     
 }

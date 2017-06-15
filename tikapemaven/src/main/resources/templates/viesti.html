@@ -8,27 +8,43 @@
             th{
                 text-align: left;
             }
+            ul li{
+                display: inline;
+                
+            }
         </style>
     </head>
 
     <body>
-        <h1>Keskusteluaiheen viestit</h1>
-        
-        <ol>
+        <h1>
+            <span th:text="'Alue: ' + ${alue.nimi}"></span>
+            <span> &rarr; </span>
+            <span th:text="${aihe.nimi}"></span>
+
+        </h1>
+
+        <ol th:start="${aloitus}">
             <li th:each="alkio : ${viestit}">
                 <span th:text="${alkio.sisalto}">d</span> t. <span th:text="${alkio.lahettaja}">a</span>
             </li>
         </ol>
-        
+
         <form method="POST">
             <p>Kirjoita viestisi tähän:</p>
             <textarea rows="4" cols="50" name = "sisalto"></textarea>
             <p>Kirjoitathan vielä nimesi kiitos!</p>
             <input type="text" name="lahettaja"/>
-            
+
             <input type="submit" value="Lähetä!"/>
         </form>
+        
+        Sivu:
+        <ul>
+            <li th:each="sivu : ${sivut}">
+                <a th:href="@{~/{a.nimi}/{ai.id}/{s.nro} (a.nimi = ${alue.nimi}, ai.id = ${aihe.id}, s.nro = ${sivu})}" th:text="${sivu}">ju</a>
+            </li>
+        </ul>
+        
         <a th:href="@{~/{a.nimi} (a.nimi = ${alue.nimi})}" th:text="Takaisin">a</a>
-
     </body>
 </html>
