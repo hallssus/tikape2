@@ -33,6 +33,11 @@ public class Main {
 //            System.out.println("Yhteyden muodostaminen epäonnistui.");
 //        }
 //        
+         // asetetaan portti jos heroku antaa PORT-ympäristömuuttujan
+        if (System.getenv("PORT") != null) {
+            port(Integer.valueOf(System.getenv("PORT")));
+        }
+        
         Database database = new Database("org.sqlite.JDBC", "jdbc:sqlite:Keskustelupalsta.db");
         database.setDebugMode(true);
 
@@ -80,7 +85,9 @@ public class Main {
             return "onnistui taas";
         });
         
-        get("/:a_nimi/:ai_id", (req,res) -> {
+        
+        
+        get("/:a_nimi/:ai_id" , (req,res) -> {
             HashMap map = new HashMap<>();
             map.put("alue", alueDao.ensiNimella(req.params(":a_nimi")));
             map.put("aihe", aiheDao.findOne(Integer.parseInt(req.params(":ai_id"))));
