@@ -10,6 +10,9 @@ public class Viesti {
     public Viesti(Integer id, String lahettaja, String sisalto, Integer aihe, String alue) {
         this.id=id;
         this.lahettaja=lahettaja;
+        if (this.lahettaja.isEmpty()) {
+            this.lahettaja="anonyymi";
+        }
         this.sisalto=sisalto;
         this.aihe=aihe;
         this.alue=alue;
